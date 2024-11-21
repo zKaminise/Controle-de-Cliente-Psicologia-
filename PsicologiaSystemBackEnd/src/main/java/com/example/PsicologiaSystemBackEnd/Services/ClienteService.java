@@ -25,15 +25,45 @@ public class ClienteService {
     }
 
     @Transactional
-    public ClienteDto findById(@PathVariable Long id) { //Buscar um cliente pelo ID
-        Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-        return new ClienteDto(cliente);
-    }
-
-    @Transactional
     public Cliente findByCpf(String cpf) {
         Optional<Cliente> cliente = clienteRepository.findByCpf(cpf);
         return cliente.orElseThrow(() -> new RuntimeException("Cliente com o CPF: " + cpf + "Não foi encontrado"));
+    }
+
+    @Transactional
+    public Cliente cadastrarCliente(ClienteDto clienteDto) {
+        Cliente cliente = new Cliente();
+        atualizarEntidade(cliente, clienteDto); // Preenche os dados
+        return clienteRepository.save(cliente);
+    }
+
+    private void atualizarEntidade(Cliente cliente, ClienteDto clienteDto) {
+        cliente.setNome(clienteDto.getNome());
+        cliente.setDataNascimento(clienteDto.getDataNascimento());
+        cliente.setGeneroEnum(clienteDto.getGeneroEnum());
+        cliente.setEndereco(clienteDto.getEndereco());
+        cliente.setEstadosBrasileirosEnum(clienteDto.getEstadosBrasileirosEnum());
+        cliente.setCpf(clienteDto.getCpf());
+        cliente.setEmail(clienteDto.getEmail());
+        cliente.setTelefone(clienteDto.getTelefone());
+        cliente.setReligiao(clienteDto.getReligiao());
+        cliente.setMedicamentos(clienteDto.getMedicamentos());
+        cliente.setQueixaPrincipal(clienteDto.getQueixaPrincipal());
+        cliente.setRecebeuAlta(clienteDto.getRecebeuAlta());
+    }
+
+    @Transactional
+    public Cliente atualizarCliente(Long id, ClienteDto clienteDto) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente com o ID: " + id + "não foi encontrado"));
+        atualizarEntidade(cliente, clienteDto);
+        return clienteRepository.save(cliente);
+    }
+
+    @Transactional
+    public void deletarCliente(Long id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente com o ID: " + id + " não foi encontrado"));
+        clienteRepository.delete(cliente);
     }
 }

@@ -4,14 +4,12 @@ import com.example.PsicologiaSystemBackEnd.Enums.EstadosBrasileirosEnum;
 import com.example.PsicologiaSystemBackEnd.Enums.GeneroEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 
@@ -27,7 +25,8 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    @Length(min = 3, message = "Nome não pode estar vazio")
     @Column(nullable = false)
     private String nome;
 
@@ -37,7 +36,6 @@ public class Cliente {
     private LocalDate dataNascimento;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private GeneroEnum generoEnum;
 
     private String endereco;
@@ -45,8 +43,9 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private EstadosBrasileirosEnum estadosBrasileirosEnum;
 
+    @NotBlank(message = "CPF é obrigatório")
     @Size(min = 11, max = 11, message = "CPF deve conter 11 números.")
-    @Column(unique = true, nullable = false, length = 11)
+    @Column(unique = true, nullable = false)
     private String cpf;
 
     @Email(message = "Email deve ser valido")

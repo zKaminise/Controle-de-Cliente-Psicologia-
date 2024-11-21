@@ -1,0 +1,1 @@
+INSERT INTO tb_cliente (nome, data_nascimento, genero_enum, endereco, estados_brasileiros_enum, cpf, email, telefone, religiao, medicamentos, queixa_principal, recebeu_alta) VALUES ('Gabriel Teste', '2000-11-08', 'MASCULINO', 'Rua A, 123', 'SP', '12345678901', 'teste@example.com', '34987654321', 'Católico', 'Nenhum', 'Teste2', true);

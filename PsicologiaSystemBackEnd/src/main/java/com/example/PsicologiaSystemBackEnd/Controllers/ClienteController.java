@@ -40,15 +40,14 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<String> cadastrarCliente(@RequestBody ClienteDto clienteDto) {
-        clienteRepository.findByEmailOrCpf(clienteDto.getEmail(),
-                clienteDto.getCpf()).ifPresent(x -> {
-                    throw new EmailOrCpfFoundException();
-        });
         try {
+            clienteService.validarCadastro(clienteDto);
             clienteService.cadastrarCliente(clienteDto);
             return ResponseEntity.ok("Cliente cadastrado com sucesso");
-        } catch (IllegalArgumentException e) {
+        } catch (EmailOrCpfFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Erro ao cadastrar cliente: " + e.getMessage());
         }
     }
 

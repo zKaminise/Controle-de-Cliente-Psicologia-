@@ -3,6 +3,7 @@ package com.example.PsicologiaSystemBackEnd.Services;
 import com.example.PsicologiaSystemBackEnd.Dtos.ClienteDto;
 import com.example.PsicologiaSystemBackEnd.Dtos.ClienteMinInfoDto;
 import com.example.PsicologiaSystemBackEnd.Entities.Cliente;
+import com.example.PsicologiaSystemBackEnd.Exceptions.EmailOrCpfFoundException;
 import com.example.PsicologiaSystemBackEnd.Repositorys.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,17 @@ public class ClienteService {
     public Cliente findByCpf(String cpf) {
         Optional<Cliente> cliente = clienteRepository.findByCpf(cpf);
         return cliente.orElseThrow(() -> new RuntimeException("Cliente com o CPF: " + cpf + "Não foi encontrado"));
+    }
+
+    public void validarCadastro(ClienteDto clienteDto) {
+        clienteRepository.findByEmail(clienteDto.getEmail())
+                .ifPresent(cliente -> {
+                    throw new EmailOrCpfFoundException("Email já cadastrado: " + clienteDto.getEmail());
+                });
+        clienteRepository.findByCpf(clienteDto.getCpf())
+                .ifPresent(cliente -> {
+                    throw new EmailOrCpfFoundException("CPF já cadastrado: " + clienteDto.getCpf());
+                });
     }
 
     @Transactional

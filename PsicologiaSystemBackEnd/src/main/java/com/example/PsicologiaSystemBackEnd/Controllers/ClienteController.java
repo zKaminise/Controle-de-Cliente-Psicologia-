@@ -3,6 +3,8 @@ package com.example.PsicologiaSystemBackEnd.Controllers;
 import com.example.PsicologiaSystemBackEnd.Dtos.ClienteDto;
 import com.example.PsicologiaSystemBackEnd.Dtos.ClienteMinInfoDto;
 import com.example.PsicologiaSystemBackEnd.Entities.Cliente;
+import com.example.PsicologiaSystemBackEnd.Exceptions.EmailOrCpfFoundException;
+import com.example.PsicologiaSystemBackEnd.Repositorys.ClienteRepository;
 import com.example.PsicologiaSystemBackEnd.Services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @GetMapping
     public List<ClienteMinInfoDto> findAll() {
@@ -35,6 +40,10 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<String> cadastrarCliente(@RequestBody ClienteDto clienteDto) {
+        clienteRepository.findByEmailOrCpf(clienteDto.getEmail(),
+                clienteDto.getCpf()).ifPresent(x -> {
+                    throw new EmailOrCpfFoundException();
+        });
         try {
             clienteService.cadastrarCliente(clienteDto);
             return ResponseEntity.ok("Cliente cadastrado com sucesso");

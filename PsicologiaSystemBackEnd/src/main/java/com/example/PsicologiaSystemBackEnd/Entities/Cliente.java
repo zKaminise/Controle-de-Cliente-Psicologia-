@@ -2,9 +2,15 @@ package com.example.PsicologiaSystemBackEnd.Entities;
 
 import com.example.PsicologiaSystemBackEnd.Enums.EstadosBrasileirosEnum;
 import com.example.PsicologiaSystemBackEnd.Enums.GeneroEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
@@ -14,6 +20,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 
 public class Cliente {
 
@@ -24,6 +31,8 @@ public class Cliente {
     @Column(nullable = false)
     private String nome;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Past(message = "A data não está correta")
     @Column(nullable = false)
     private LocalDate dataNascimento;
 
@@ -36,13 +45,16 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private EstadosBrasileirosEnum estadosBrasileirosEnum;
 
+    @Size(min = 11, max = 11, message = "CPF deve conter 11 números.")
     @Column(unique = true, nullable = false, length = 11)
     private String cpf;
 
+    @Email(message = "Email deve ser valido")
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(length = 12, nullable = false)
+    @Pattern(regexp = "\\d{10,11}", message = "O telefone deve conter apenas números.")
+    @Column(length = 11, nullable = false)
     private String telefone;
     private String religiao;
     private String medicamentos;

@@ -9,5 +9,4 @@ public class PsicologiaSystemBackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PsicologiaSystemBackEndApplication.class, args);
 	}
-
 }

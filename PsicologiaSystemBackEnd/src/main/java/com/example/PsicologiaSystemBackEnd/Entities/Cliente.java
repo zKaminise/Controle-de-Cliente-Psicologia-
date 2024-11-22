@@ -44,7 +44,7 @@ public class Cliente {
     private EstadosBrasileirosEnum estadosBrasileirosEnum;
 
     @NotBlank(message = "CPF é obrigatório")
-    @Size(min = 11, max = 11, message = "CPF deve conter 11 números.")
+    @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 números.")
     @Column(unique = true, nullable = false)
     private String cpf;
 
@@ -55,6 +55,7 @@ public class Cliente {
     @Pattern(regexp = "\\d{10,11}", message = "O telefone deve conter apenas números.")
     @Column(length = 11, nullable = false)
     private String telefone;
+
     private String religiao;
     private String medicamentos;
 

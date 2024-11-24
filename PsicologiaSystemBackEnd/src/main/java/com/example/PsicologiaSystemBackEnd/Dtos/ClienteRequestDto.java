@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class ClienteMinInfoDto {
+public class ClienteRequestDto { //DTO para receber dados ao Cadastrar ou editar um cliente
 
     private Long id;
     private String nome;
@@ -18,7 +18,7 @@ public class ClienteMinInfoDto {
     private String telefone;
     private Boolean recebeuAlta;
 
-    public ClienteMinInfoDto(Cliente cliente) {
+    public ClienteRequestDto(Cliente cliente) {
         id = cliente.getId();
         nome = cliente.getNome();
         cpf = cliente.getCpf();

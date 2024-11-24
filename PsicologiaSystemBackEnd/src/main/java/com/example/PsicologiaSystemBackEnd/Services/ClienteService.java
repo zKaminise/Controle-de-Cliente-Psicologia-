@@ -1,10 +1,8 @@
 package com.example.PsicologiaSystemBackEnd.Services;
 
-import com.example.PsicologiaSystemBackEnd.Dtos.ClienteDto;
-import com.example.PsicologiaSystemBackEnd.Dtos.ClienteMinInfoDto;
+import com.example.PsicologiaSystemBackEnd.Dtos.ClienteRequestDto;
 import com.example.PsicologiaSystemBackEnd.Entities.Cliente;
 import com.example.PsicologiaSystemBackEnd.Exceptions.ClienteNotFoundException;
-import com.example.PsicologiaSystemBackEnd.Exceptions.EmailOrCpfFoundException;
 import com.example.PsicologiaSystemBackEnd.Repositorys.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +26,9 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public List<ClienteMinInfoDto> findAll() {
+    public List<ClienteRequestDto> findAll() {
         List<Cliente> result = clienteRepository.findAll();
-        return result.stream().map(ClienteMinInfoDto::new).toList();
+        return result.stream().map(ClienteRequestDto::new).toList();
     }
 
     public Optional<Cliente> buscarClientePorCpf(String cpf) {

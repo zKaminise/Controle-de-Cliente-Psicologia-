@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class ClienteDto {
+public class ClienteResponseDto { //Clase DTO para Retornar Dados do cliente após consulta
 
     private Long id;
     private String nome;
@@ -30,7 +30,7 @@ public class ClienteDto {
     private String queixaPrincipal;
     private Boolean recebeuAlta;
 
-    public ClienteDto(Cliente cliente) {
+    public ClienteResponseDto(Cliente cliente) {
         BeanUtils.copyProperties(cliente, this);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.PsicologiaSystemBackEnd.Controllers;
 
-import com.example.PsicologiaSystemBackEnd.Dtos.ClienteDto;
-import com.example.PsicologiaSystemBackEnd.Dtos.ClienteMinInfoDto;
+import com.example.PsicologiaSystemBackEnd.Dtos.ClienteRequestDto;
 import com.example.PsicologiaSystemBackEnd.Entities.Cliente;
 import com.example.PsicologiaSystemBackEnd.Exceptions.ClienteNotFoundException;
 import com.example.PsicologiaSystemBackEnd.Exceptions.EmailOrCpfFoundException;
@@ -22,8 +21,8 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
-    public List<ClienteMinInfoDto> findAll() {
-        List<ClienteMinInfoDto> findAllClientes = clienteService.findAll();
+    public List<ClienteRequestDto> findAll() {
+        List<ClienteRequestDto> findAllClientes = clienteService.findAll();
         return findAllClientes;
     }
 

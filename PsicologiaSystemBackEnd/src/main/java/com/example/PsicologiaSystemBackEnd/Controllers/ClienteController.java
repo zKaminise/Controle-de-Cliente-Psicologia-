@@ -3,7 +3,7 @@ package com.example.PsicologiaSystemBackEnd.Controllers;
 import com.example.PsicologiaSystemBackEnd.Dtos.ClienteRequestDto;
 import com.example.PsicologiaSystemBackEnd.Entities.Cliente;
 import com.example.PsicologiaSystemBackEnd.Exceptions.ClienteNotFoundException;
-import com.example.PsicologiaSystemBackEnd.Exceptions.EmailOrCpfFoundException;
+import com.example.PsicologiaSystemBackEnd.Exceptions.InvalidCpfException;
 import com.example.PsicologiaSystemBackEnd.Services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class ClienteController {
             clienteService.novoCliente(cliente);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("Cliente cadastrado com sucesso!");
-        } catch (EmailOrCpfFoundException e) {
+        } catch (InvalidCpfException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

@@ -15,7 +15,7 @@ public class UserDetailsServiceImpl implements  UserDetailsService{
         if("admin".equals(username)) {
             return User.builder()
                     .username("admin")
-                    .password("{noop}admin123")
+                    .password("{noop}adm123")
                     .roles("ADMIN")
                     .build();
         }

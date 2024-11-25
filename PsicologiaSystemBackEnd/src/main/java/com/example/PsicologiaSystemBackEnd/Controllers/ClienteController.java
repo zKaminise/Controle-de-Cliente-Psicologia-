@@ -6,6 +6,10 @@ import com.example.PsicologiaSystemBackEnd.Exceptions.ClienteNotFoundException;
 import com.example.PsicologiaSystemBackEnd.Exceptions.InvalidCpfException;
 import com.example.PsicologiaSystemBackEnd.Services.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +36,12 @@ public class ClienteController {
 
     @GetMapping("/{cpf}")
     @Operation(summary = "Listar Clientes filtrados por CPF", description = "Essa função é responsável por listar clientes com base no CPF pesquisado")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = Cliente.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Não foi encontrado cliente com esse CPF")
+    })
     public ResponseEntity<Cliente> buscarCliente(@PathVariable String cpf) {
         Optional<Cliente> cliente = clienteService.buscarClientePorCpf(cpf);
         return cliente.map(ResponseEntity::ok)
@@ -41,6 +51,12 @@ public class ClienteController {
 
     @PostMapping
     @Operation(summary = "Cadastrar novo Cliente", description = "Essa função é responsável por cadastrar novos clientes")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = Cliente.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Cliente já existe")
+    })
     public ResponseEntity<String> cadastrarCliente(@RequestBody Cliente cliente) {
         try {
             clienteService.novoCliente(cliente);

@@ -9,5 +9,6 @@ public class LoginRequestDto {
     @Schema(example = "Gabriel")
     private String username;
 
+    @Schema(example = "senha123")
     private String password;
 }

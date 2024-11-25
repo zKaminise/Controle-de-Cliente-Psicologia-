@@ -3,6 +3,7 @@ package com.example.PsicologiaSystemBackEnd.Entities;
 import com.example.PsicologiaSystemBackEnd.Enums.EstadosBrasileirosEnum;
 import com.example.PsicologiaSystemBackEnd.Enums.GeneroEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class Cliente {
     
     @Length(min = 3, message = "Nome não pode estar vazio")
     @Column(nullable = false)
+    @Schema(example = "Gabriel Misao",minLength = 3, maxLength = 150, requiredMode = Schema.RequiredMode.REQUIRED, description = "Nome do Cliente")
     private String nome;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -46,15 +48,19 @@ public class Cliente {
     @NotBlank(message = "CPF é obrigatório")
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 números.")
     @Column(unique = true, nullable = false)
+    @Schema(example = "12345678910",minLength = 11, maxLength = 11, requiredMode = Schema.RequiredMode.REQUIRED, description = "CPF do Cliente")
     private String cpf;
 
     @Email(message = "Email deve ser valido")
     @Column(unique = true, nullable = false)
+    @Schema(example = "Gabriel@teste.com", requiredMode = Schema.RequiredMode.REQUIRED, description = "Email do Cliente")
     private String email;
 
     @Pattern(regexp = "\\d{10,11}", message = "O telefone deve conter apenas números.")
     @Column(length = 11, nullable = false)
+    @Schema(example = "34999999999",minLength = 10, maxLength = 11, description = "Celular do Cliente")
     private String telefone;
+
 
     private String religiao;
     private String medicamentos;

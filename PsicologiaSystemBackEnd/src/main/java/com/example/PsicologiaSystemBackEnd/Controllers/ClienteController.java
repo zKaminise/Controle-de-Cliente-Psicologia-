@@ -5,6 +5,8 @@ import com.example.PsicologiaSystemBackEnd.Entities.Cliente;
 import com.example.PsicologiaSystemBackEnd.Exceptions.ClienteNotFoundException;
 import com.example.PsicologiaSystemBackEnd.Exceptions.InvalidCpfException;
 import com.example.PsicologiaSystemBackEnd.Services.ClienteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +17,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
+@Tag(name = "Clientes", description = "Informações dos Clientes")
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
     @GetMapping
+    @Operation(summary = "Listar todos Clientes", description = "Essa função é responsável por listar todos clientes")
     public List<ClienteRequestDto> findAll() {
         List<ClienteRequestDto> findAllClientes = clienteService.findAll();
         return findAllClientes;
     }
 
     @GetMapping("/{cpf}")
+    @Operation(summary = "Listar Clientes filtrados por CPF", description = "Essa função é responsável por listar clientes com base no CPF pesquisado")
     public ResponseEntity<Cliente> buscarCliente(@PathVariable String cpf) {
         Optional<Cliente> cliente = clienteService.buscarClientePorCpf(cpf);
         return cliente.map(ResponseEntity::ok)
@@ -35,6 +40,7 @@ public class ClienteController {
     }
 
     @PostMapping
+    @Operation(summary = "Cadastrar novo Cliente", description = "Essa função é responsável por cadastrar novos clientes")
     public ResponseEntity<String> cadastrarCliente(@RequestBody Cliente cliente) {
         try {
             clienteService.novoCliente(cliente);
@@ -46,6 +52,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Alterar informações dos clientes", description = "Essa função é responsável por Alterar informações dos clientes")
     public ResponseEntity<String> editarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
         try {
             clienteService.editarCliente(id, cliente);
@@ -56,6 +63,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Excluir Cliente", description = "Essa função é responsável por excluir um determinado cliente")
     public ResponseEntity<String> excluirCliente(@PathVariable Long id) {
         try {
             clienteService.excluirCliente(id);

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>PsicologiaSystemBackEnd</artifactId>
+	<artifactId>PsicoManager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>PsicologiaSystemBackEnd</name>
 	<description>Sistema para cadastro de Clientes</description>
@@ -167,5 +167,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

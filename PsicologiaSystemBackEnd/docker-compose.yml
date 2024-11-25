@@ -1,40 +1,36 @@
-version: "3.7"
-services:
-  # ====================================================================================================================
-  # POSTGRES SERVER
-  # ====================================================================================================================
-  pg-docker:
-    image: postgres:14-alpine
-    container_name: dev-postgresql
-    environment:
-      POSTGRES_DB: PsicoManager
-      POSTGRES_PASSWORD: admin123
-    ports:
-      - 5433:5432
-    volumes:
-      - ./.data/postgresql/data:/var/lib/postgresql/data
-    networks:
-      - dev-network
-  # ====================================================================================================================
-  # PGADMIN
-  # ====================================================================================================================
-  pgadmin-docker:
-    image: dpage/pgadmin4
-    container_name: dev-pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: me@example.com
-      PGADMIN_DEFAULT_PASSWORD: 1234567
-    ports:
-      - 5050:80
-    volumes:
-      - ./.data/pgadmin:/var/lib/pgadmin
-    depends_on:
-      - pg-docker
-    networks:
-      - dev-network
-# ======================================================================================================================
-# REDE
-# ======================================================================================================================
+version: '3.8'
+
 networks:
-  dev-network:
+  gv-network:
     driver: bridge
+volumes:
+  prometheus_data:
+  grafana_data:
+
+services:
+  postgres:
+    container_name: PsicoManagement
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_DB=PsicoManagerSystem
+prometheus:
+  container_name: prometheus
+  image: prom/prometheus:latest
+  volumes:
+    - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    - prometheus_data:/prometheus
+  networks:
+    - gv-network
+  ports:
+    - 9090:9090
+grafana:
+  container_name: grafana
+  image: grafana/grafana:latest
+  ports:
+    - 3000:3000
+  networks:
+    - gv-network

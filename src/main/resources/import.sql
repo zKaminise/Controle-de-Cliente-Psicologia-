@@ -1,0 +1,5 @@
+INSERT INTO tb_cliente (nome, data_nascimento, genero_enum, endereco, estados_brasileiros_enum, cpf, email, telefone, religiao, medicamentos, queixa_principal, recebeu_alta) VALUES ('Gabriel Teste', '2000-11-08', 'MASCULINO', 'Rua A, 123', 'SP', '02273593643', 'teste@example.com', '34987653321', 'Católico', 'Nenhum', 'Teste2', true);
+INSERT INTO tb_cliente (nome, data_nascimento, genero_enum, endereco, estados_brasileiros_enum, cpf, email, telefone, religiao, medicamentos, queixa_principal, recebeu_alta) VALUES ('Angelo Teste', '2000-07-08', 'MASCULINO', 'Rua A, 123', 'SP', '12345678901', 'teste2@example.com', '34987654321', 'Católico', 'Nenhum', 'Teste22', true);
+INSERT INTO tb_cliente (nome, data_nascimento, genero_enum, endereco, estados_brasileiros_enum, cpf, email, telefone, religiao, medicamentos, queixa_principal, recebeu_alta) VALUES ('Leandro Teste', '2000-06-10', 'MASCULINO', 'Rua A, 123', 'SP', '11863373624', 'teste3@example.com', '34987454321', 'Católico', 'Nenhum', 'Teste222', false);
+
+--INSERT INTO tb_user (username, password) VALUES ('admin', 'adm123');
